@@ -39,7 +39,7 @@ const getExcelResult = async () => {
           fs.mkdirSync(directory);
         }
 
-        // await workbook.xlsx.writeFile(`${approot}/output/${filename}.xlsx`);
+        await workbook.xlsx.writeFile(`${approot}/output/${filename}.xlsx`);
       })
       .catch((err) => {
         console.log('[ERROR] ', err);

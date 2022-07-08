@@ -1,5 +1,4 @@
 const xlsx = require('../utils/xlsx');
-const { search } = require('../../esclient');
 
 //================== 1. header ==================//
 // header 스타일 및 컬럼 추가.

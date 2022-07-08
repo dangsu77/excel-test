@@ -3,7 +3,7 @@ module.exports = {
     {
       label: '제품명',
       key: 'product_name',
-      path: 'OpenQuery SE'
+      path: ''
     },
     {
       label: '점검일자',
@@ -105,7 +105,8 @@ module.exports = {
     },
     {
       label: 'Heap % of RAM',
-      key: '',
+      key: 'jvm.mem.heap_committed_in_bytes',
+      formula: '',
       upperLimits: [0.6, 0.75]
     }
   ],

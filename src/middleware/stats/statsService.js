@@ -1,17 +1,8 @@
 const { stats } = require('../esclient');
-const { headers, infomations, memorys, networks, actions } = require('./rules');
+// const { t } = require('typy');
+const objectPath = require("object-path");
+
 // const { getNodeStats } = require('./stats');
-
-// 노드별 결과 담는 최종 배열
-const nodeResults = [];
-
-const nodeResult = {
-  header: {},
-  info: {},
-  memory: {},
-  action: {},
-  network: {}
-};
 
 const getNodeStats = async () => {
   return await stats.nodes.stats({});
@@ -21,22 +12,68 @@ const getNodeInfos = async () => {
   return await stats.nodes.info({});
 }
 
-getNodeStats()
-  .then((value) => {
-    // console.log(typeof value);
-  })
-  .catch(e => {
-    console.error(e.message);
-  })
 // console.log(nodeStats);
 // const nodeIds = Object.keys(nodeStats.nodes);
 // nodes info api 에 설치 위치 확인가능
 const nodeInfo = getNodeInfos();
 
-const getNodeResult = (nodeId, areas) => {
+const getNodeResult = async () => {
+  // 노드별 결과 담는 최종 배열
+  const nodeResults = [];
+
+  // 각 노드 데이터
+  const nodeResult = {
+    header: {},
+    info: {},
+    memory: {},
+    action: {},
+    network: {}
+  };
+
   // 1. stats, info , rule 가져오기
+  const nodeStats = await stats.nodes.stats({});
+  const nodeInfos = await stats.nodes.info({});
+  const { headers, infomations, memories, networks, actions } = require('./rules');
+
+  const nodeIds = Object.keys(nodeStats.nodes);
 
   // 2. 각 점검항목마다 값을 가져와서 nodeResult에 set
+  nodeIds.forEach(nodeId => {
+    console.log(nodeId);
+    // headers.forEach(header => {
+
+    // });
+
+    // infomations.forEach(infomation => {
+
+    // });
+
+    memories.forEach(memory => {
+      let node = {
+        'label': memory.label,
+        'key': objectPath.get(nodeStats.nodes[nodeId], memory.key)
+      };
+
+      // nodeResult.memory
+
+      nodeResult.memory.label = memory.label;
+      // console.log(objectPath.get(nodeStats.nodes[nodeId], memory.key));
+      nodeResult.memory.key = objectPath.get(nodeStats.nodes[nodeId], memory.key);
+
+      // console.log(node);
+    });
+
+    // networks.forEach(network => {
+
+    // });
+
+    // actions.forEach(action => {
+
+    // });
+    nodeResults.push(nodeResult);
+  });
+
+
   // let headerResult = {
   //   제품명: nodeResult.header.product_name,
   //   라이센스: '??????',
@@ -46,13 +83,14 @@ const getNodeResult = (nodeId, areas) => {
   //   로그위치: nodeResult.header.logs_path
   // };
 
-  let retArea = {};
 
 
   // 3. return nodeResults
+  console.log(nodeResults);
+  return nodeResults
 }
 
-getNodeResult(headers);
+// console.log(nodeResults);
 
 // const getRules()
 
@@ -143,5 +181,6 @@ getNodeResult(headers);
 
 module.exports = {
   // StatsService: StatsService
+  getNodeResult: getNodeResult
 }
 

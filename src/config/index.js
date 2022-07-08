@@ -1,13 +1,13 @@
-var _fs = require('fs');
+const _fs = require('fs');
 
 // var logger = require('../module/logger')(module);
 
-var elasticsearchConfig = {};
+let elasticsearchConfig = {};
 // var consoleConfig = {};
 // var gatewayConfig = {};
 
 try {
-    elasticsearchConfig = JSON.parse(_fs.readFileSync('./config/elasticsearch.json', 'utf8'));
+    elasticsearchConfig = JSON.parse(_fs.readFileSync('../config/elasticsearch.json', 'utf8'));
     // consoleConfig = JSON.parse(_fs.readFileSync('./config/console.json', 'utf8'));
     // gatewayConfig = JSON.parse(_fs.readFileSync('./config/gateway.json', 'utf8'));
 
@@ -38,7 +38,7 @@ try {
     // logger.info('loading configuration completed');
 }
 catch (err) {
-    logger.error('could not load configuration | ' + err.toString());
+    console.error('could not load configuration | ' + err.toString());
     process.exit(1);
 }
 

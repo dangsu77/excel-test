@@ -6,6 +6,7 @@ const getNodeStats = async () => {
   const nodeStats = await stats.nodes.stats({
     metric: 'fs,jvm,os,process,indices,http'
   });
+
   const nodeIds = Object.keys(nodeStats.nodes);
 
   // nodes info api 에 설치 위치 확인가능
@@ -82,7 +83,7 @@ const getNodeStats = async () => {
 }
 
 const calculateThreshold = (value, upperLimit, lowerLimit) => {
-  console.log(value, upperLimit);
+  // console.log(value, upperLimit);
   if (upperLimit) {
     if (value <= upperLimit[0]) {
       return 'PASS';

@@ -1,10 +1,11 @@
 // Requiring the module
-const { getExcelResult } = require('./middleware/xlsx');
-// const { StatsService } = require('./middleware/stats/statsService');
-const { memories } = require('./middleware/stats/rules');
+// const { getExcelResult } = require('./middleware/xlsx');
+const statsService = require('./middleware/stats/statsService');
 
 const main = async () => {
-  getExcelResult();
+  const nodeResult = await statsService.getNodeResult();
+  console.log(nodeResult);
+  // getExcelResult();
   // const localDate = convertUTCDateToLocalDate(new Date('2021-09-10T05:40:27.125Z'));  // ISO-8601 formatted date returned from server
   // console.log(localDate);
   // const statsService = new StatsService();
